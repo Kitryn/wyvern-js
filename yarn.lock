@@ -25,6 +25,18 @@
     toposort "^2.0.2"
     yargs "^10.0.3"
 
+"@0x/assert@^3.0.28":
+  version "3.0.28"
+  resolved "https://registry.yarnpkg.com/@0x/assert/-/assert-3.0.28.tgz#04ae55391f90eb433a86e8356cdf6799c63c5a0b"
+  integrity sha512-hBiBhoThQTEbzHSv/VEuiOAqzP7LWzVs9XXtdb2O8757ocWEcewJsp4cwgqdA4it4IwlWdwG5ASRn7BMSNcyXg==
+  dependencies:
+    "@0x/json-schemas" "^6.2.0"
+    "@0x/typescript-typings" "^5.2.0"
+    "@0x/utils" "^6.4.3"
+    "@types/node" "12.12.54"
+    lodash "^4.17.11"
+    valid-url "^1.0.9"
+
 "@0x/json-schemas@^6.2.0":
   version "6.2.0"
   resolved "https://registry.yarnpkg.com/@0x/json-schemas/-/json-schemas-6.2.0.tgz#d91bfd67b87e9ccb5c259642dd9b231bc56dbb69"
@@ -2491,6 +2503,11 @@ uuid@2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-2.0.1.tgz#c2a30dedb3e535d72ccf82e343941a50ba8533ac"
   integrity sha1-wqMN7bPlNdcsz4LjQ5QaULqFM6w=
+
+valid-url@^1.0.9:
+  version "1.0.9"
+  resolved "https://registry.yarnpkg.com/valid-url/-/valid-url-1.0.9.tgz#1c14479b40f1397a75782f115e4086447433a200"
+  integrity sha1-HBRHm0DxOXp1eC8RXkCGRHQzogA=
 
 whatwg-fetch@>=0.10.0:
   version "3.6.2"
