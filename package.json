@@ -31,6 +31,7 @@
     "@0x/utils": "^6.4.3",
     "@ethersproject/abstract-provider": "^5.4.1",
     "ethereum-types": "^3.5.0",
+    "ethereumjs-abi": "https://github.com/ProjectWyvern/ethereumjs-abi.git",
     "ethereumjs-util": "^7.1.0",
     "ethers": "^5.4.4",
     "jsonschema": "^1.4.0",

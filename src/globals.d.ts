@@ -1,31 +1,31 @@
-declare module "web3_beta";
-declare module "request-promise-native";
-declare module "web3-provider-engine";
-declare module "web3-provider-engine/subproviders/rpc";
+// declare module "web3_beta";
+// declare module "request-promise-native";
+// declare module "web3-provider-engine";
+// declare module "web3-provider-engine/subproviders/rpc";
 
 /* tslint:enable */
 
-declare module "*.json" {
-    const json: any;
-    /* tslint:disable */
-    export default json;
-    /* tslint:enable */
-}
+// declare module "*.json" {
+//     const json: any;
+//     /* tslint:disable */
+//     export default json;
+//     /* tslint:enable */
+// }
 
 // find-version declarations
-declare function findVersions(version: string): string[];
-declare module "find-versions" {
-    export = findVersions;
-}
+// declare function findVersions(version: string): string[];
+// declare module "find-versions" {
+//     export = findVersions;
+// }
 
 // compare-version declarations
-declare function compareVersions(
-    firstVersion: string,
-    secondVersion: string
-): number;
-declare module "compare-versions" {
-    export = compareVersions;
-}
+// declare function compareVersions(
+//     firstVersion: string,
+//     secondVersion: string
+// ): number;
+// declare module "compare-versions" {
+//     export = compareVersions;
+// }
 
 declare module "ethereumjs-abi" {
     const soliditySHA3: (argTypes: string[], args: any[]) => Buffer;
@@ -37,17 +37,17 @@ declare module "ethereumjs-abi" {
 }
 
 // truffle-hdwallet-provider declarations
-declare module "truffle-hdwallet-provider" {
-    import * as Web3 from "web3";
-    class HDWalletProvider implements Web3.Provider {
-        constructor(mnemonic: string, rpcUrl: string);
-        public sendAsync(
-            payload: Web3.JSONRPCRequestPayload,
-            callback: (err: Error, result: Web3.JSONRPCResponsePayload) => void
-        ): void;
-    }
-    export = HDWalletProvider;
-}
+// declare module "truffle-hdwallet-provider" {
+//     import * as Web3 from "web3";
+//     class HDWalletProvider implements Web3.Provider {
+//         constructor(mnemonic: string, rpcUrl: string);
+//         public sendAsync(
+//             payload: Web3.JSONRPCRequestPayload,
+//             callback: (err: Error, result: Web3.JSONRPCResponsePayload) => void
+//         ): void;
+//     }
+//     export = HDWalletProvider;
+// }
 
 // abi-decoder declarations
 // interface DecodedLogArg {}
