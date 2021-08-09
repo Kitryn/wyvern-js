@@ -106,7 +106,7 @@ export const utils = {
         return ethUtil.bufferToHex(hash);
     },
     getCurrentUnixTimestampSec(): BigNumber {
-        return new BigNumber(Date.now() / 1000).round();
+        return new BigNumber(Date.now() / 1000).integerValue();
     },
     getCurrentUnixTimestampMs(): BigNumber {
         return new BigNumber(Date.now());
