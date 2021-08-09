@@ -193,5 +193,3 @@ export type AtomicizedReplacementEncoder = (
     abis: AnnotatedFunctionABI[],
     kind?: FunctionInputKind
 ) => string;
-
-export type Web3Provider = Web3.Provider;
