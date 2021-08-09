@@ -1,42 +1,9 @@
 export declare const schemas: {
-    numberSchema: {
-        id: string;
-        type: string;
-        pattern: string;
-    };
-    addressSchema: {
-        id: string;
-        type: string;
-        pattern: string;
-    };
-    ecSignatureSchema: {
-        id: string;
-        properties: {
-            v: {
-                type: string;
-                minimum: number;
-                maximum: number;
-            };
-            r: {
-                $ref: string;
-            };
-            s: {
-                $ref: string;
-            };
-        };
-        required: string[];
-        type: string;
-    };
-    ecSignatureParameterSchema: {
-        id: string;
-        type: string;
-        pattern: string;
-    };
-    orderHashSchema: {
-        id: string;
-        type: string;
-        pattern: string;
-    };
+    numberSchema: any;
+    addressSchema: any;
+    ecSignatureSchema: any;
+    ecSignatureParameterSchema: any;
+    orderHashSchema: any;
     orderSchema: {
         id: string;
         properties: {
@@ -120,6 +87,8 @@ export declare const schemas: {
         id: string;
         allOf: ({
             $ref: string;
+            properties?: undefined;
+            required?: undefined;
         } | {
             properties: {
                 ecSignature: {
@@ -127,6 +96,7 @@ export declare const schemas: {
                 };
             };
             required: string[];
+            $ref?: undefined;
         })[];
     };
 };

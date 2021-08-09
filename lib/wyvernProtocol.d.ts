@@ -7,7 +7,7 @@ import { WyvernProxyRegistryContract } from './abi_gen/wyvern_proxy_registry';
 import { WyvernTokenContract } from './abi_gen/wyvern_token';
 export declare class WyvernProtocol {
     static NULL_ADDRESS: string;
-    static MAX_UINT_256: BigNumber;
+    static MAX_UINT_256: any;
     wyvernExchange: WyvernExchangeContract;
     wyvernProxyRegistry: WyvernProxyRegistryContract;
     wyvernDAO: WyvernDAOContract;

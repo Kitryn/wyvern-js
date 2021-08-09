@@ -1,5 +1,5 @@
-import { SchemaValidator } from "@0xproject/json-schemas";
-import { BigNumber, intervalUtils } from "@0xproject/utils";
+import { SchemaValidator } from "@0x/json-schemas";
+import { BigNumber, intervalUtils } from "@0x/utils"; // uses bignumber.js under the hood
 import { Web3Wrapper } from "@0xproject/web3-wrapper";
 import * as ethABI from "ethereumjs-abi";
 import * as ethUtil from "ethereumjs-util";
