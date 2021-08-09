@@ -1,16 +1,16 @@
-import { TxData, TxDataPayable } from "@0xproject/types";
+import { TxData, TxDataPayable } from "ethereum-types";
+import { ethers } from "ethers";
 import * as _ from "lodash";
-import * as Web3 from "web3";
 
 export class BaseContract {
-    protected web3ContractInstance: Web3.ContractInstance;
+    protected ethersContractInstance: ethers.Contract;
     protected defaults: Partial<TxData>;
     protected async applyDefaultsToTxDataAsync<
         T extends TxData | TxDataPayable
     >(
-        txData: T,
-        estimateGasAsync?: (txData: T) => Promise<number>
-    ): Promise<TxData> {
+        txData: Partial<T>,
+        estimateGasAsync?: (txData: Partial<T>) => Promise<number>
+    ): Promise<Partial<TxData>> {
         // Gas amount sourced with the following priorities:
         // 1. Optional param passed in to public method call
         // 2. Global config passed in at library instantiation
@@ -32,10 +32,10 @@ export class BaseContract {
         return txDataWithDefaults;
     }
     constructor(
-        web3ContractInstance: Web3.ContractInstance,
+        ethersContractInstance: ethers.Contract,
         defaults: Partial<TxData>
     ) {
-        this.web3ContractInstance = web3ContractInstance;
+        this.ethersContractInstance = ethersContractInstance;
         this.defaults = defaults;
     }
 }
