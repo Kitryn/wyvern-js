@@ -35,7 +35,7 @@ import { WyvernTokenContract } from "./abi_gen/wyvern_token";
 export class WyvernProtocol {
     public static NULL_ADDRESS = constants.NULL_ADDRESS;
 
-    public static MAX_UINT_256 = new BigNumber(2).pow(256).sub(1);
+    public static MAX_UINT_256 = new BigNumber(2).pow(256).minus(1);
 
     public wyvernExchange: WyvernExchangeContract;
 
@@ -49,7 +49,8 @@ export class WyvernProtocol {
 
     private _ethersSigner: Signer;
 
-    private _abiDecoder: AbiDecoder;
+    // TODO: Taken out of the original code -- needs assignment??
+    // private _abiDecoder: AbiDecoder;
 
     public static getExchangeContractAddress(network: Network): string {
         return constants.DEPLOYED[network].WyvernExchange;
@@ -402,16 +403,18 @@ export class WyvernProtocol {
         }
     };
 
-    constructor(provider: Signer, config: WyvernProtocolConfig) {
+    constructor(ethersSigner: Signer, config: WyvernProtocolConfig) {
         // assert.isWeb3Provider("provider", provider);  // remove check since we're converting to ethers
         // assert.doesConformToSchema('config', config, wyvernProtocolConfigSchema)
-        this._web3Wrapper = new Web3Wrapper(provider, {
-            gasPrice: config.gasPrice,
-        });
+        if (config.gasPrice) {
+            throw new Error("Gas price setting not implemented");
+        }
+        this._ethersSigner = ethersSigner;
 
         const exchangeContractAddress =
             config.wyvernExchangeContractAddress ||
             WyvernProtocol.getExchangeContractAddress(config.network);
+
         this.wyvernExchange = new WyvernExchangeContract(
             this._web3Wrapper.getContractInstance(
                 constants.EXCHANGE_ABI as any,
@@ -595,16 +598,18 @@ export class WyvernProtocol {
                             intervalUtils.clearAsyncExcludingInterval(
                                 intervalId
                             );
-                            const logsWithDecodedArgs = _.map(
-                                transactionReceipt.logs,
-                                this._abiDecoder.tryToDecodeLogOrNoop.bind(
-                                    this._abiDecoder
-                                )
-                            );
+                            // TODO?
+                            // const logsWithDecodedArgs = _.map(
+                            //     transactionReceipt.logs,
+                            //     this._abiDecoder.tryToDecodeLogOrNoop.bind(
+                            //         this._abiDecoder
+                            //     )
+                            // );
                             const transactionReceiptWithDecodedLogArgs: TransactionReceiptWithDecodedLogs =
                                 {
                                     ...transactionReceipt,
-                                    logs: logsWithDecodedArgs,
+                                    // logs: logsWithDecodedArgs,
+                                    logs: transactionReceipt.logs,
                                 };
                             resolve(transactionReceiptWithDecodedLogArgs);
                         }
