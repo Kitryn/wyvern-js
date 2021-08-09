@@ -31,23 +31,21 @@ import { WyvernDAOContract } from "./abi_gen/wyvern_d_a_o";
 import { WyvernExchangeContract } from "./abi_gen/wyvern_exchange";
 import { WyvernProxyRegistryContract } from "./abi_gen/wyvern_proxy_registry";
 import { WyvernTokenContract } from "./abi_gen/wyvern_token";
+import { Provider } from "@ethersproject/abstract-provider";
 
 export class WyvernProtocol {
     public static NULL_ADDRESS = constants.NULL_ADDRESS;
 
     public static MAX_UINT_256 = new BigNumber(2).pow(256).minus(1);
 
-    public wyvernExchange: WyvernExchangeContract;
-
-    public wyvernProxyRegistry: WyvernProxyRegistryContract;
-
-    public wyvernDAO: WyvernDAOContract;
-
-    public wyvernToken: WyvernTokenContract;
-
-    public wyvernAtomicizer: WyvernAtomicizerContract;
+    public wyvernExchange!: WyvernExchangeContract;
+    public wyvernProxyRegistry!: WyvernProxyRegistryContract;
+    public wyvernDAO!: WyvernDAOContract;
+    public wyvernToken!: WyvernTokenContract;
+    public wyvernAtomicizer!: WyvernAtomicizerContract;
 
     private _ethersSigner: Signer;
+    private _config: WyvernProtocolConfig;
 
     // TODO: Taken out of the original code -- needs assignment??
     // private _abiDecoder: AbiDecoder;
@@ -410,62 +408,8 @@ export class WyvernProtocol {
             throw new Error("Gas price setting not implemented");
         }
         this._ethersSigner = ethersSigner;
-
-        const exchangeContractAddress =
-            config.wyvernExchangeContractAddress ||
-            WyvernProtocol.getExchangeContractAddress(config.network);
-
-        this.wyvernExchange = new WyvernExchangeContract(
-            this._web3Wrapper.getContractInstance(
-                constants.EXCHANGE_ABI as any,
-                exchangeContractAddress
-            ),
-            {}
-        );
-
-        const proxyRegistryContractAddress =
-            config.wyvernProxyRegistryContractAddress ||
-            WyvernProtocol.getProxyRegistryContractAddress(config.network);
-        this.wyvernProxyRegistry = new WyvernProxyRegistryContract(
-            this._web3Wrapper.getContractInstance(
-                constants.PROXY_REGISTRY_ABI as any,
-                proxyRegistryContractAddress
-            ),
-            {}
-        );
-
-        const daoContractAddress =
-            config.wyvernDAOContractAddress ||
-            WyvernProtocol.getDAOContractAddress(config.network);
-        this.wyvernDAO = new WyvernDAOContract(
-            this._web3Wrapper.getContractInstance(
-                constants.DAO_ABI as any,
-                daoContractAddress
-            ),
-            {}
-        );
-
-        const tokenContractAddress =
-            config.wyvernTokenContractAddress ||
-            WyvernProtocol.getTokenContractAddress(config.network);
-        this.wyvernToken = new WyvernTokenContract(
-            this._web3Wrapper.getContractInstance(
-                constants.TOKEN_ABI as any,
-                tokenContractAddress
-            ),
-            {}
-        );
-
-        const atomicizerContractAddress =
-            config.wyvernAtomicizerContractAddress ||
-            WyvernProtocol.getAtomicizerContractAddress(config.network);
-        this.wyvernAtomicizer = new WyvernAtomicizerContract(
-            this._web3Wrapper.getContractInstance(
-                constants.ATOMICIZER_ABI as any,
-                atomicizerContractAddress
-            ),
-            {}
-        );
+        this._config = config;
+        this.connectContracts(this._config);
     }
 
     /**
@@ -474,12 +418,80 @@ export class WyvernProtocol {
      * @param   provider    The Web3Provider you would like the wyvernProtocol.js library to use from now on.
      * @param   networkId   The id of the network your provider is connected to
      */
-    public setProvider(provider: Web3Provider, networkId: number): void {
-        this._web3Wrapper.setProvider(provider);
-        (this.wyvernExchange as any)._invalidateContractInstances();
-        (this.wyvernExchange as any)._setNetworkId(networkId);
-        (this.wyvernProxyRegistry as any)._invalidateContractInstance();
-        (this.wyvernProxyRegistry as any)._setNetworkId(networkId);
+    public setProvider(provider: Provider): void {
+        this.setSigner(this._ethersSigner.connect(provider));
+    }
+
+    public setSigner(signer: Signer): void {
+        this._ethersSigner = signer; // will this work? signer doesn't seem to be stateful?
+        this.connectContracts(this._config);
+    }
+
+    private connectContracts(config: WyvernProtocolConfig) {
+        const exchangeContractAddress =
+            config.wyvernExchangeContractAddress ||
+            WyvernProtocol.getExchangeContractAddress(config.network);
+
+        this.wyvernExchange = new WyvernExchangeContract(
+            new ethers.Contract(
+                exchangeContractAddress,
+                constants.EXCHANGE_ABI,
+                this._ethersSigner
+            ),
+            {}
+        );
+
+        const proxyRegistryContractAddress =
+            config.wyvernProxyRegistryContractAddress ||
+            WyvernProtocol.getProxyRegistryContractAddress(config.network);
+
+        this.wyvernProxyRegistry = new WyvernProxyRegistryContract(
+            new ethers.Contract(
+                proxyRegistryContractAddress,
+                constants.PROXY_REGISTRY_ABI,
+                this._ethersSigner
+            ),
+            {}
+        );
+
+        const daoContractAddress =
+            config.wyvernDAOContractAddress ||
+            WyvernProtocol.getDAOContractAddress(config.network);
+
+        this.wyvernDAO = new WyvernDAOContract(
+            new ethers.Contract(
+                daoContractAddress,
+                constants.DAO_ABI,
+                this._ethersSigner
+            ),
+            {}
+        );
+
+        const tokenContractAddress =
+            config.wyvernTokenContractAddress ||
+            WyvernProtocol.getTokenContractAddress(config.network);
+
+        this.wyvernToken = new WyvernTokenContract(
+            new ethers.Contract(
+                tokenContractAddress,
+                constants.TOKEN_ABI,
+                this._ethersSigner
+            ),
+            {}
+        );
+
+        const atomicizerContractAddress =
+            config.wyvernAtomicizerContractAddress ||
+            WyvernProtocol.getAtomicizerContractAddress(config.network);
+
+        this.wyvernAtomicizer = new WyvernAtomicizerContract(
+            new ethers.Contract(
+                atomicizerContractAddress,
+                constants.ATOMICIZER_ABI as any,
+                this._ethersSigner
+            ),
+            {}
+        );
     }
 
     /**
@@ -487,9 +499,8 @@ export class WyvernProtocol {
      * @return  An array of available user Ethereum addresses.
      */
     public async getAvailableAddressesAsync(): Promise<string[]> {
-        const availableAddresses =
-            await this._web3Wrapper.getAvailableAddressesAsync();
-        return availableAddresses;
+        const availableAddresses = await this._ethersSigner.getAddress();
+        return [availableAddresses]; // workaround for now. TODO: can possibly implement other detection methods to get array of signers for other ethers signers
     }
 
     /**
@@ -500,62 +511,64 @@ export class WyvernProtocol {
      *          must be available via the Web3.Provider supplied to wyvernProtocol.js.
      * @return  An object containing the Elliptic curve signature parameters generated by signing the orderHash.
      */
-    public async signOrderHashAsync(
-        orderHash: string,
-        signerAddress: string
-    ): Promise<ECSignature> {
-        assert.isHexString("orderHash", orderHash);
-        /* await assert.isSenderAddressAsync('signerAddress', signerAddress, this._web3Wrapper); */
+    // ============== TODO ================
+    // TODO: This function doesn't seem to be used by opensea-js, wontfix for now until needed
+    // public async signOrderHashAsync(
+    //     orderHash: string,
+    //     signerAddress: string
+    // ): Promise<ECSignature> {
+    //     assert.isHexString("orderHash", orderHash);
+    //     /* await assert.isSenderAddressAsync('signerAddress', signerAddress, this._web3Wrapper); */
 
-        let msgHashHex;
-        const nodeVersion = await this._web3Wrapper.getNodeVersionAsync();
-        const isParityNode = utils.isParityNode(nodeVersion);
-        const isTestRpc = utils.isTestRpc(nodeVersion);
-        if (isParityNode || isTestRpc) {
-            // Parity and TestRpc nodes add the personalMessage prefix itself
-            msgHashHex = orderHash;
-        } else {
-            const orderHashBuff = ethUtil.toBuffer(orderHash);
-            const msgHashBuff = ethUtil.hashPersonalMessage(orderHashBuff);
-            msgHashHex = ethUtil.bufferToHex(msgHashBuff);
-        }
+    //     let msgHashHex;
+    //     const nodeVersion = await this._web3Wrapper.getNodeVersionAsync();
+    //     const isParityNode = utils.isParityNode(nodeVersion);
+    //     const isTestRpc = utils.isTestRpc(nodeVersion);
+    //     if (isParityNode || isTestRpc) {
+    //         // Parity and TestRpc nodes add the personalMessage prefix itself
+    //         msgHashHex = orderHash;
+    //     } else {
+    //         const orderHashBuff = ethUtil.toBuffer(orderHash);
+    //         const msgHashBuff = ethUtil.hashPersonalMessage(orderHashBuff);
+    //         msgHashHex = ethUtil.bufferToHex(msgHashBuff);
+    //     }
 
-        const signature = await this._web3Wrapper.signTransactionAsync(
-            signerAddress,
-            msgHashHex
-        );
+    //     const signature = await this._web3Wrapper.signTransactionAsync(
+    //         signerAddress,
+    //         msgHashHex
+    //     );
 
-        // HACK: There is no consensus on whether the signatureHex string should be formatted as
-        // v + r + s OR r + s + v, and different clients (even different versions of the same client)
-        // return the signature params in different orders. In order to support all client implementations,
-        // we parse the signature in both ways, and evaluate if either one is a valid signature.
-        const validVParamValues = [27, 28];
-        const ecSignatureVRS = signatureUtils.parseSignatureHexAsVRS(signature);
-        if (_.includes(validVParamValues, ecSignatureVRS.v)) {
-            const isValidVRSSignature = WyvernProtocol.isValidSignature(
-                orderHash,
-                ecSignatureVRS,
-                signerAddress
-            );
-            if (isValidVRSSignature) {
-                return ecSignatureVRS;
-            }
-        }
+    //     // HACK: There is no consensus on whether the signatureHex string should be formatted as
+    //     // v + r + s OR r + s + v, and different clients (even different versions of the same client)
+    //     // return the signature params in different orders. In order to support all client implementations,
+    //     // we parse the signature in both ways, and evaluate if either one is a valid signature.
+    //     const validVParamValues = [27, 28];
+    //     const ecSignatureVRS = signatureUtils.parseSignatureHexAsVRS(signature);
+    //     if (_.includes(validVParamValues, ecSignatureVRS.v)) {
+    //         const isValidVRSSignature = WyvernProtocol.isValidSignature(
+    //             orderHash,
+    //             ecSignatureVRS,
+    //             signerAddress
+    //         );
+    //         if (isValidVRSSignature) {
+    //             return ecSignatureVRS;
+    //         }
+    //     }
 
-        const ecSignatureRSV = signatureUtils.parseSignatureHexAsRSV(signature);
-        if (_.includes(validVParamValues, ecSignatureRSV.v)) {
-            const isValidRSVSignature = WyvernProtocol.isValidSignature(
-                orderHash,
-                ecSignatureRSV,
-                signerAddress
-            );
-            if (isValidRSVSignature) {
-                return ecSignatureRSV;
-            }
-        }
+    //     const ecSignatureRSV = signatureUtils.parseSignatureHexAsRSV(signature);
+    //     if (_.includes(validVParamValues, ecSignatureRSV.v)) {
+    //         const isValidRSVSignature = WyvernProtocol.isValidSignature(
+    //             orderHash,
+    //             ecSignatureRSV,
+    //             signerAddress
+    //         );
+    //         if (isValidRSVSignature) {
+    //             return ecSignatureRSV;
+    //         }
+    //     }
 
-        throw new Error(WyvernProtocolError.InvalidSignature);
-    }
+    //     throw new Error(WyvernProtocolError.InvalidSignature);
+    // }
 
     /**
      * Waits for a transaction to be mined and returns the transaction receipt.
@@ -564,62 +577,64 @@ export class WyvernProtocol {
      * @param   timeoutMs         How long (in ms) to poll for transaction mined until aborting.
      * @return  Transaction receipt with decoded log args.
      */
-    public async awaitTransactionMinedAsync(
-        txHash: string,
-        pollingIntervalMs = 1000,
-        timeoutMs?: number
-    ): Promise<TransactionReceiptWithDecodedLogs> {
-        let timeoutExceeded = false;
-        if (timeoutMs) {
-            setTimeout(() => (timeoutExceeded = true), timeoutMs);
-        }
+    // ============== TODO ================
+    // TODO: This function doesn't seem to be used by opensea-js, wontfix for now until needed
+    // public async awaitTransactionMinedAsync(
+    //     txHash: string,
+    //     pollingIntervalMs = 1000,
+    //     timeoutMs?: number
+    // ): Promise<TransactionReceiptWithDecodedLogs> {
+    //     let timeoutExceeded = false;
+    //     if (timeoutMs) {
+    //         setTimeout(() => (timeoutExceeded = true), timeoutMs);
+    //     }
 
-        const txReceiptPromise = new Promise(
-            (
-                resolve: (receipt: TransactionReceiptWithDecodedLogs) => void,
-                reject
-            ) => {
-                const intervalId = intervalUtils.setAsyncExcludingInterval(
-                    async () => {
-                        if (timeoutExceeded) {
-                            intervalUtils.clearAsyncExcludingInterval(
-                                intervalId
-                            );
-                            return reject(
-                                WyvernProtocolError.TransactionMiningTimeout
-                            );
-                        }
+    //     const txReceiptPromise = new Promise(
+    //         (
+    //             resolve: (receipt: TransactionReceiptWithDecodedLogs) => void,
+    //             reject
+    //         ) => {
+    //             const intervalId = intervalUtils.setAsyncExcludingInterval(
+    //                 async () => {
+    //                     if (timeoutExceeded) {
+    //                         intervalUtils.clearAsyncExcludingInterval(
+    //                             intervalId
+    //                         );
+    //                         return reject(
+    //                             WyvernProtocolError.TransactionMiningTimeout
+    //                         );
+    //                     }
 
-                        const transactionReceipt =
-                            await this._web3Wrapper.getTransactionReceiptAsync(
-                                txHash
-                            );
-                        if (!_.isNull(transactionReceipt)) {
-                            intervalUtils.clearAsyncExcludingInterval(
-                                intervalId
-                            );
-                            // TODO?
-                            // const logsWithDecodedArgs = _.map(
-                            //     transactionReceipt.logs,
-                            //     this._abiDecoder.tryToDecodeLogOrNoop.bind(
-                            //         this._abiDecoder
-                            //     )
-                            // );
-                            const transactionReceiptWithDecodedLogArgs: TransactionReceiptWithDecodedLogs =
-                                {
-                                    ...transactionReceipt,
-                                    // logs: logsWithDecodedArgs,
-                                    logs: transactionReceipt.logs,
-                                };
-                            resolve(transactionReceiptWithDecodedLogArgs);
-                        }
-                    },
-                    pollingIntervalMs,
-                    () => ({})
-                );
-            }
-        );
+    //                     const transactionReceipt =
+    //                         await this._web3Wrapper.getTransactionReceiptAsync(
+    //                             txHash
+    //                         );
+    //                     if (!_.isNull(transactionReceipt)) {
+    //                         intervalUtils.clearAsyncExcludingInterval(
+    //                             intervalId
+    //                         );
+    //                         // TODO?
+    //                         // const logsWithDecodedArgs = _.map(
+    //                         //     transactionReceipt.logs,
+    //                         //     this._abiDecoder.tryToDecodeLogOrNoop.bind(
+    //                         //         this._abiDecoder
+    //                         //     )
+    //                         // );
+    //                         const transactionReceiptWithDecodedLogArgs: TransactionReceiptWithDecodedLogs =
+    //                             {
+    //                                 ...transactionReceipt,
+    //                                 // logs: logsWithDecodedArgs,
+    //                                 logs: transactionReceipt.logs,
+    //                             };
+    //                         resolve(transactionReceiptWithDecodedLogArgs);
+    //                     }
+    //                 },
+    //                 pollingIntervalMs,
+    //                 () => ({})
+    //             );
+    //         }
+    //     );
 
-        return txReceiptPromise;
-    }
+    //     return txReceiptPromise;
+    // }
 }

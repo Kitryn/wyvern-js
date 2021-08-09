@@ -5,6 +5,7 @@ import * as _ from "lodash";
 export class BaseContract {
     protected ethersContractInstance: ethers.Contract;
     protected defaults: Partial<TxData>;
+
     protected async applyDefaultsToTxDataAsync<
         T extends TxData | TxDataPayable
     >(
