@@ -26,6 +26,7 @@
   },
   "homepage": "https://github.com/ProjectWyvern/wyvern-js#readme",
   "dependencies": {
+    "@0x/abi-gen": "^5.6.1",
     "@0x/json-schemas": "^6.2.0",
     "@0x/utils": "^6.4.3",
     "bignumber.js": "^9.0.1",
