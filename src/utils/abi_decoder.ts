@@ -7,6 +7,7 @@ import {
     EventParameter,
 } from "ethereum-types";
 import { BigNumber } from "@0x/utils";
+import { keccakFromString } from "ethereumjs-util";
 import * as _ from "lodash";
 
 import {
@@ -17,6 +18,7 @@ import {
     RawLog,
     SolidityTypes,
 } from "../types";
+import { ethers } from "ethers";
 
 export class AbiDecoder {
     private _savedABIs: AbiDefinition[] = [];
@@ -30,13 +32,15 @@ export class AbiDecoder {
         formatted = _.padStart(formatted, 40, "0");
         return `0x${formatted}`;
     }
+
     constructor(abiArrays: AbiDefinition[][]) {
         _.map(abiArrays, this._addABI.bind(this));
     }
+
     // This method can only decode logs from the 0x & ERC20 smart contracts
-    public tryToDecodeLogOrNoop<ArgsType extends ContractEventArgs>(
+    public tryToDecodeLogOrNoop(
         log: LogEntry
-    ): LogWithDecodedArgs<ArgsType> | RawLog {
+    ): LogWithDecodedArgs<DecodedLogArgs> | RawLog {
         const methodId = log.topics[0];
         const event = this._methodIds[methodId];
         if (_.isUndefined(event)) {
@@ -52,13 +56,15 @@ export class AbiDecoder {
             (input) => !input.indexed
         );
         const dataTypes = _.map(nonIndexedInputs, (input) => input.type);
-        const decodedData = SolidityCoder.decodeParams(
+
+        const decodedData = ethers.utils.defaultAbiCoder.decode(
             dataTypes,
-            logData.slice("0x".length)
+            logData
         );
 
         _.map(event.inputs, (param: EventParameter) => {
             // Indexed parameters are stored in topics. Non-indexed ones in decodedData
+            // inputs e.g. {indexed: true, name: owner, type: address}
             let value = param.indexed
                 ? log.topics[topicsIndex++]
                 : decodedData[dataIndex++];
@@ -71,7 +77,7 @@ export class AbiDecoder {
             ) {
                 value = new BigNumber(value);
             }
-            decodedParams[param.name] = value;
+            decodedParams[param.name] = value; // Object e.g. { owner: 0x12345 }
         });
 
         return {
@@ -80,15 +86,18 @@ export class AbiDecoder {
             args: decodedParams,
         };
     }
+
     private _addABI(abiArray: AbiDefinition[]): void {
         _.map(abiArray, (abi: AbiDefinition) => {
             if (abi.type === AbiType.Event) {
-                const signature = `${abi.name}(${_.map(
-                    abi.inputs,
+                const eventAbi = abi as EventAbi;
+                const signature = `${eventAbi.name}(${_.map(
+                    eventAbi.inputs,
                     (input) => input.type
                 ).join(",")})`;
-                const signatureHash = new Web3().sha3(signature);
-                this._methodIds[signatureHash] = abi;
+                const signatureHash =
+                    keccakFromString(signature).toString("hex");
+                this._methodIds[signatureHash] = eventAbi;
             }
         });
         this._savedABIs = this._savedABIs.concat(abiArray);
