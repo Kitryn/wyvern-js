@@ -1,5 +1,6 @@
-import BN = require('bn.js');
-import { Order, SignedOrder } from '../types';
+import { BigNumber } from "@0x/utils";
+import BN = require("bn.js");
+import { Order, SignedOrder } from "../types";
 export declare const utils: {
     /**
      * Converts BigNumber instance to BN
@@ -7,13 +8,13 @@ export declare const utils: {
      * expects values of Solidity type `uint` to be passed as type `BN`.
      * We do not use BN anywhere else in the codebase.
      */
-    bigNumberToBN(value: any): BN;
+    bigNumberToBN(value: BigNumber): BN;
     consoleLog(message: string): void;
     isParityNode(nodeVersion: string): boolean;
     isTestRpc(nodeVersion: string): boolean;
     spawnSwitchErr(name: string, value: any): Error;
     getAssetHashHex(assetHash: string, schema: string): string;
     getOrderHashHex(order: Order | SignedOrder): string;
-    getCurrentUnixTimestampSec(): any;
-    getCurrentUnixTimestampMs(): any;
+    getCurrentUnixTimestampSec(): BigNumber;
+    getCurrentUnixTimestampMs(): BigNumber;
 };

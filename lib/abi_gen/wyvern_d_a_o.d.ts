@@ -1,103 +1,93 @@
-/**
- * This file is auto-generated using abi-gen. Don't edit directly.
- * Templates can be found at https://github.com/0xProject/0x.js/tree/development/packages/abi-gen-templates.
- */
-import { TxData } from '@0xproject/types';
-import { BigNumber } from '@0xproject/utils';
-import * as Web3 from 'web3';
-import { BaseContract } from './base_contract';
+import { TxData } from "ethereum-types";
+import { BigNumber } from "@0x/utils";
+import { ethers } from "ethers";
+import { TransactionResponse } from "@ethersproject/abstract-provider";
+import { BaseContract } from "./base_contract";
 export declare class WyvernDAOContract extends BaseContract {
     proposals: {
-        callAsync(index_0: BigNumber, txData?: TxData): Promise<[string, BigNumber, string, BigNumber, BigNumber, boolean, boolean, BigNumber, string]>;
+        callAsync(index_0_0: BigNumber, txData?: Partial<TxData>): Promise<[string, BigNumber, string, BigNumber, BigNumber, boolean, boolean, BigNumber, string]>;
     };
     delegatesByDelegator: {
-        callAsync(index_0: string, txData?: TxData): Promise<string>;
+        callAsync(index_0_0: string, txData?: Partial<TxData>): Promise<string>;
     };
     name: {
-        callAsync(txData?: TxData): Promise<string>;
+        callAsync(txData?: Partial<TxData>): Promise<string>;
     };
     REQUIRED_SHARES_TO_BE_BOARD_MEMBER: {
-        callAsync(txData?: TxData): Promise<BigNumber>;
+        callAsync(txData?: Partial<TxData>): Promise<BigNumber>;
     };
     lockedDelegatingTokens: {
-        callAsync(index_0: string, txData?: TxData): Promise<BigNumber>;
+        callAsync(index_0_0: string, txData?: Partial<TxData>): Promise<BigNumber>;
     };
     countVotes: {
-        callAsync(proposalNumber_0: BigNumber, txData?: TxData): Promise<[BigNumber, BigNumber, BigNumber]>;
+        callAsync(proposalNumber_0: BigNumber, txData?: Partial<TxData>): Promise<[BigNumber, BigNumber, BigNumber]>;
     };
     executeProposal: {
-        sendTransactionAsync(proposalNumber_0: BigNumber, transactionBytecode_1: string, txData?: TxData): Promise<string>;
-        estimateGasAsync(proposalNumber_0: BigNumber, transactionBytecode_1: string, txData?: TxData): Promise<number>;
+        sendTransactionAsync(proposalNumber_0: BigNumber, transactionBytecode_1: string, txData?: Partial<TxData>): Promise<TransactionResponse>;
         getABIEncodedTransactionData(proposalNumber_0: BigNumber, transactionBytecode_1: string): string;
     };
     sharesTokenAddress: {
-        callAsync(txData?: TxData): Promise<string>;
+        callAsync(txData?: Partial<TxData>): Promise<string>;
     };
     delegatedAmountsByDelegate: {
-        callAsync(index_0: string, txData?: TxData): Promise<BigNumber>;
+        callAsync(index_0_0: string, txData?: Partial<TxData>): Promise<BigNumber>;
     };
     numProposals: {
-        callAsync(txData?: TxData): Promise<BigNumber>;
+        callAsync(txData?: Partial<TxData>): Promise<BigNumber>;
     };
     hasVoted: {
-        callAsync(proposalNumber_0: BigNumber, shareholder_1: string, txData?: TxData): Promise<boolean>;
+        callAsync(proposalNumber_0: BigNumber, shareholder_1: string, txData?: Partial<TxData>): Promise<boolean>;
     };
     TOKEN_DECIMALS: {
-        callAsync(txData?: TxData): Promise<BigNumber>;
+        callAsync(txData?: Partial<TxData>): Promise<BigNumber>;
     };
     setDelegateAndLockTokens: {
-        sendTransactionAsync(tokensToLock_0: BigNumber, delegate_1: string, txData?: TxData): Promise<string>;
-        estimateGasAsync(tokensToLock_0: BigNumber, delegate_1: string, txData?: TxData): Promise<number>;
+        sendTransactionAsync(tokensToLock_0: BigNumber, delegate_1: string, txData?: Partial<TxData>): Promise<TransactionResponse>;
         getABIEncodedTransactionData(tokensToLock_0: BigNumber, delegate_1: string): string;
     };
     clearDelegateAndUnlockTokens: {
-        sendTransactionAsync(txData?: TxData): Promise<string>;
-        estimateGasAsync(txData?: TxData): Promise<number>;
+        sendTransactionAsync(txData?: Partial<TxData>): Promise<TransactionResponse>;
         getABIEncodedTransactionData(): string;
     };
     debatingPeriodInMinutes: {
-        callAsync(txData?: TxData): Promise<BigNumber>;
+        callAsync(txData?: Partial<TxData>): Promise<BigNumber>;
     };
     changeVotingRules: {
-        sendTransactionAsync(minimumSharesToPassAVote_0: BigNumber, minutesForDebate_1: BigNumber, sharesToBeBoardMember_2: BigNumber, txData?: TxData): Promise<string>;
-        estimateGasAsync(minimumSharesToPassAVote_0: BigNumber, minutesForDebate_1: BigNumber, sharesToBeBoardMember_2: BigNumber, txData?: TxData): Promise<number>;
+        sendTransactionAsync(minimumSharesToPassAVote_0: BigNumber, minutesForDebate_1: BigNumber, sharesToBeBoardMember_2: BigNumber, txData?: Partial<TxData>): Promise<TransactionResponse>;
         getABIEncodedTransactionData(minimumSharesToPassAVote_0: BigNumber, minutesForDebate_1: BigNumber, sharesToBeBoardMember_2: BigNumber): string;
     };
     minimumQuorum: {
-        callAsync(txData?: TxData): Promise<BigNumber>;
+        callAsync(txData?: Partial<TxData>): Promise<BigNumber>;
     };
     receiveApproval: {
-        sendTransactionAsync(from_0: string, value_1: BigNumber, token_2: string, extraData_3: string, txData?: TxData): Promise<string>;
-        estimateGasAsync(from_0: string, value_1: BigNumber, token_2: string, extraData_3: string, txData?: TxData): Promise<number>;
+        sendTransactionAsync(from_0: string, value_1: BigNumber, token_2: string, extraData_3: string, txData?: Partial<TxData>): Promise<TransactionResponse>;
         getABIEncodedTransactionData(from_0: string, value_1: BigNumber, token_2: string, extraData_3: string): string;
     };
     tokenLocker: {
-        callAsync(txData?: TxData): Promise<string>;
+        callAsync(txData?: Partial<TxData>): Promise<string>;
     };
     MINIMUM_QUORUM: {
-        callAsync(txData?: TxData): Promise<BigNumber>;
+        callAsync(txData?: Partial<TxData>): Promise<BigNumber>;
     };
     requiredSharesToBeBoardMember: {
-        callAsync(txData?: TxData): Promise<BigNumber>;
+        callAsync(txData?: Partial<TxData>): Promise<BigNumber>;
     };
     vote: {
-        sendTransactionAsync(proposalNumber_0: BigNumber, supportsProposal_1: boolean, txData?: TxData): Promise<string>;
-        estimateGasAsync(proposalNumber_0: BigNumber, supportsProposal_1: boolean, txData?: TxData): Promise<number>;
+        sendTransactionAsync(proposalNumber_0: BigNumber, supportsProposal_1: boolean, txData?: Partial<TxData>): Promise<TransactionResponse>;
         getABIEncodedTransactionData(proposalNumber_0: BigNumber, supportsProposal_1: boolean): string;
     };
     newProposal: {
-        sendTransactionAsync(beneficiary_0: string, weiAmount_1: BigNumber, jobMetadataHash_2: string, transactionBytecode_3: string, txData?: TxData): Promise<string>;
-        estimateGasAsync(beneficiary_0: string, weiAmount_1: BigNumber, jobMetadataHash_2: string, transactionBytecode_3: string, txData?: TxData): Promise<number>;
+        sendTransactionAsync(beneficiary_0: string, weiAmount_1: BigNumber, jobMetadataHash_2: string, transactionBytecode_3: string, txData?: Partial<TxData>): Promise<TransactionResponse>;
         getABIEncodedTransactionData(beneficiary_0: string, weiAmount_1: BigNumber, jobMetadataHash_2: string, transactionBytecode_3: string): string;
     };
     DEBATE_PERIOD_MINUTES: {
-        callAsync(txData?: TxData): Promise<BigNumber>;
+        callAsync(txData?: Partial<TxData>): Promise<BigNumber>;
     };
     checkProposalCode: {
-        callAsync(proposalNumber_0: BigNumber, beneficiary_1: string, weiAmount_2: BigNumber, transactionBytecode_3: string, txData?: TxData): Promise<boolean>;
+        callAsync(proposalNumber_0: BigNumber, beneficiary_1: string, weiAmount_2: BigNumber, transactionBytecode_3: string, txData?: Partial<TxData>): Promise<boolean>;
     };
     totalLockedTokens: {
-        callAsync(txData?: TxData): Promise<BigNumber>;
+        callAsync(txData?: Partial<TxData>): Promise<BigNumber>;
     };
-    constructor(web3ContractInstance: Web3.ContractInstance, defaults: Partial<TxData>);
+    constructor(ethersContractInstance: ethers.Contract, defaults: Partial<TxData>);
 }

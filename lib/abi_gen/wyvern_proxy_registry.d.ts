@@ -1,70 +1,60 @@
-/**
- * This file is auto-generated using abi-gen. Don't edit directly.
- * Templates can be found at https://github.com/0xProject/0x.js/tree/development/packages/abi-gen-templates.
- */
-import { TxData } from '@0xproject/types';
-import { BigNumber } from '@0xproject/utils';
-import * as Web3 from 'web3';
-import { BaseContract } from './base_contract';
+import { TxData } from "ethereum-types";
+import { BigNumber } from "@0x/utils";
+import { ethers } from "ethers";
+import { TransactionResponse } from "@ethersproject/abstract-provider";
+import { BaseContract } from "./base_contract";
 export declare class WyvernProxyRegistryContract extends BaseContract {
     name: {
-        callAsync(txData?: TxData): Promise<string>;
+        callAsync(txData?: Partial<TxData>): Promise<string>;
     };
     initialAddressSet: {
-        callAsync(txData?: TxData): Promise<boolean>;
+        callAsync(txData?: Partial<TxData>): Promise<boolean>;
     };
     endGrantAuthentication: {
-        sendTransactionAsync(addr_0: string, txData?: TxData): Promise<string>;
-        estimateGasAsync(addr_0: string, txData?: TxData): Promise<number>;
+        sendTransactionAsync(addr_0: string, txData?: Partial<TxData>): Promise<TransactionResponse>;
         getABIEncodedTransactionData(addr_0: string): string;
     };
     revokeAuthentication: {
-        sendTransactionAsync(addr_0: string, txData?: TxData): Promise<string>;
-        estimateGasAsync(addr_0: string, txData?: TxData): Promise<number>;
+        sendTransactionAsync(addr_0: string, txData?: Partial<TxData>): Promise<TransactionResponse>;
         getABIEncodedTransactionData(addr_0: string): string;
     };
     pending: {
-        callAsync(index_0: string, txData?: TxData): Promise<BigNumber>;
+        callAsync(index_0_0: string, txData?: Partial<TxData>): Promise<BigNumber>;
     };
     contracts: {
-        callAsync(index_0: string, txData?: TxData): Promise<boolean>;
+        callAsync(index_0_0: string, txData?: Partial<TxData>): Promise<boolean>;
     };
     renounceOwnership: {
-        sendTransactionAsync(txData?: TxData): Promise<string>;
-        estimateGasAsync(txData?: TxData): Promise<number>;
+        sendTransactionAsync(txData?: Partial<TxData>): Promise<TransactionResponse>;
         getABIEncodedTransactionData(): string;
     };
     owner: {
-        callAsync(txData?: TxData): Promise<string>;
+        callAsync(txData?: Partial<TxData>): Promise<string>;
     };
     delegateProxyImplementation: {
-        callAsync(txData?: TxData): Promise<string>;
+        callAsync(txData?: Partial<TxData>): Promise<string>;
     };
     proxies: {
-        callAsync(index_0: string, txData?: TxData): Promise<string>;
+        callAsync(index_0_0: string, txData?: Partial<TxData>): Promise<string>;
     };
     startGrantAuthentication: {
-        sendTransactionAsync(addr_0: string, txData?: TxData): Promise<string>;
-        estimateGasAsync(addr_0: string, txData?: TxData): Promise<number>;
+        sendTransactionAsync(addr_0: string, txData?: Partial<TxData>): Promise<TransactionResponse>;
         getABIEncodedTransactionData(addr_0: string): string;
     };
     registerProxy: {
-        sendTransactionAsync(txData?: TxData): Promise<string>;
-        estimateGasAsync(txData?: TxData): Promise<number>;
+        sendTransactionAsync(txData?: Partial<TxData>): Promise<TransactionResponse>;
         getABIEncodedTransactionData(): string;
     };
     DELAY_PERIOD: {
-        callAsync(txData?: TxData): Promise<BigNumber>;
+        callAsync(txData?: Partial<TxData>): Promise<BigNumber>;
     };
     transferOwnership: {
-        sendTransactionAsync(newOwner_0: string, txData?: TxData): Promise<string>;
-        estimateGasAsync(newOwner_0: string, txData?: TxData): Promise<number>;
+        sendTransactionAsync(newOwner_0: string, txData?: Partial<TxData>): Promise<TransactionResponse>;
         getABIEncodedTransactionData(newOwner_0: string): string;
     };
     grantInitialAuthentication: {
-        sendTransactionAsync(authAddress_0: string, txData?: TxData): Promise<string>;
-        estimateGasAsync(authAddress_0: string, txData?: TxData): Promise<number>;
+        sendTransactionAsync(authAddress_0: string, txData?: Partial<TxData>): Promise<TransactionResponse>;
         getABIEncodedTransactionData(authAddress_0: string): string;
     };
-    constructor(web3ContractInstance: Web3.ContractInstance, defaults: Partial<TxData>);
+    constructor(ethersContractInstance: ethers.Contract, defaults: Partial<TxData>);
 }

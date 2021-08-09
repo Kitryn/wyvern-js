@@ -1,8 +1,8 @@
-import { TxData, TxDataPayable } from '@0xproject/types';
-import * as Web3 from 'web3';
+import { TxData, TxDataPayable } from "ethereum-types";
+import { ethers } from "ethers";
 export declare class BaseContract {
-    protected web3ContractInstance: Web3.ContractInstance;
+    protected ethersContractInstance: ethers.Contract;
     protected defaults: Partial<TxData>;
-    protected applyDefaultsToTxDataAsync<T extends TxData | TxDataPayable>(txData: T, estimateGasAsync?: (txData: T) => Promise<number>): Promise<TxData>;
-    constructor(web3ContractInstance: Web3.ContractInstance, defaults: Partial<TxData>);
+    protected applyDefaultsToTxDataAsync<T extends TxData | TxDataPayable>(txData: Partial<T>, estimateGasAsync?: (txData: Partial<T>) => Promise<number>): Promise<Partial<TxData>>;
+    constructor(ethersContractInstance: ethers.Contract, defaults: Partial<TxData>);
 }
