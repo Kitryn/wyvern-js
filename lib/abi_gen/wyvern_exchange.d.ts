@@ -15,10 +15,12 @@ export declare class WyvernExchangeContract extends BaseContract {
     };
     changeMinimumMakerProtocolFee: {
         sendTransactionAsync(newMinimumMakerProtocolFee_0: BigNumber, txData?: Partial<TxData>): Promise<TransactionResponse>;
+        estimateGasAsync(newMinimumMakerProtocolFee_0: BigNumber, txData?: Partial<TxData>): Promise<BigNumber>;
         getABIEncodedTransactionData(newMinimumMakerProtocolFee_0: BigNumber): string;
     };
     changeMinimumTakerProtocolFee: {
         sendTransactionAsync(newMinimumTakerProtocolFee_0: BigNumber, txData?: Partial<TxData>): Promise<TransactionResponse>;
+        estimateGasAsync(newMinimumTakerProtocolFee_0: BigNumber, txData?: Partial<TxData>): Promise<BigNumber>;
         getABIEncodedTransactionData(newMinimumTakerProtocolFee_0: BigNumber): string;
     };
     guardedArrayReplace: {
@@ -41,6 +43,7 @@ export declare class WyvernExchangeContract extends BaseContract {
     };
     changeProtocolFeeRecipient: {
         sendTransactionAsync(newProtocolFeeRecipient_0: string, txData?: Partial<TxData>): Promise<TransactionResponse>;
+        estimateGasAsync(newProtocolFeeRecipient_0: string, txData?: Partial<TxData>): Promise<BigNumber>;
         getABIEncodedTransactionData(newProtocolFeeRecipient_0: string): string;
     };
     version: {
@@ -60,6 +63,7 @@ export declare class WyvernExchangeContract extends BaseContract {
     };
     renounceOwnership: {
         sendTransactionAsync(txData?: Partial<TxData>): Promise<TransactionResponse>;
+        estimateGasAsync(txData?: Partial<TxData>): Promise<BigNumber>;
         getABIEncodedTransactionData(): string;
     };
     hashOrder_: {
@@ -70,6 +74,7 @@ export declare class WyvernExchangeContract extends BaseContract {
     };
     approveOrder_: {
         sendTransactionAsync(addrs_0: string[], uints_1: BigNumber[], feeMethod_2: number | BigNumber, side_3: number | BigNumber, saleKind_4: number | BigNumber, howToCall_5: number | BigNumber, calldata_6: string, replacementPattern_7: string, staticExtradata_8: string, orderbookInclusionDesired_9: boolean, txData?: Partial<TxData>): Promise<TransactionResponse>;
+        estimateGasAsync(addrs_0: string[], uints_1: BigNumber[], feeMethod_2: number | BigNumber, side_3: number | BigNumber, saleKind_4: number | BigNumber, howToCall_5: number | BigNumber, calldata_6: string, replacementPattern_7: string, staticExtradata_8: string, orderbookInclusionDesired_9: boolean, txData?: Partial<TxData>): Promise<BigNumber>;
         getABIEncodedTransactionData(addrs_0: string[], uints_1: BigNumber[], feeMethod_2: number | BigNumber, side_3: number | BigNumber, saleKind_4: number | BigNumber, howToCall_5: number | BigNumber, calldata_6: string, replacementPattern_7: string, staticExtradata_8: string, orderbookInclusionDesired_9: boolean): string;
     };
     registry: {
@@ -92,10 +97,12 @@ export declare class WyvernExchangeContract extends BaseContract {
     };
     cancelOrder_: {
         sendTransactionAsync(addrs_0: string[], uints_1: BigNumber[], feeMethod_2: number | BigNumber, side_3: number | BigNumber, saleKind_4: number | BigNumber, howToCall_5: number | BigNumber, calldata_6: string, replacementPattern_7: string, staticExtradata_8: string, v_9: number | BigNumber, r_10: string, s_11: string, txData?: Partial<TxData>): Promise<TransactionResponse>;
+        estimateGasAsync(addrs_0: string[], uints_1: BigNumber[], feeMethod_2: number | BigNumber, side_3: number | BigNumber, saleKind_4: number | BigNumber, howToCall_5: number | BigNumber, calldata_6: string, replacementPattern_7: string, staticExtradata_8: string, v_9: number | BigNumber, r_10: string, s_11: string, txData?: Partial<TxData>): Promise<BigNumber>;
         getABIEncodedTransactionData(addrs_0: string[], uints_1: BigNumber[], feeMethod_2: number | BigNumber, side_3: number | BigNumber, saleKind_4: number | BigNumber, howToCall_5: number | BigNumber, calldata_6: string, replacementPattern_7: string, staticExtradata_8: string, v_9: number | BigNumber, r_10: string, s_11: string): string;
     };
     atomicMatch_: {
         sendTransactionAsync(addrs_0: string[], uints_1: BigNumber[], feeMethodsSidesKindsHowToCalls_2: Array<number | BigNumber>, calldataBuy_3: string, calldataSell_4: string, replacementPatternBuy_5: string, replacementPatternSell_6: string, staticExtradataBuy_7: string, staticExtradataSell_8: string, vs_9: Array<number | BigNumber>, rssMetadata_10: string[], txData?: Partial<TxDataPayable>): Promise<TransactionResponse>;
+        estimateGasAsync(addrs_0: string[], uints_1: BigNumber[], feeMethodsSidesKindsHowToCalls_2: Array<number | BigNumber>, calldataBuy_3: string, calldataSell_4: string, replacementPatternBuy_5: string, replacementPatternSell_6: string, staticExtradataBuy_7: string, staticExtradataSell_8: string, vs_9: Array<number | BigNumber>, rssMetadata_10: string[], txData?: Partial<TxData>): Promise<BigNumber>;
         getABIEncodedTransactionData(addrs_0: string[], uints_1: BigNumber[], feeMethodsSidesKindsHowToCalls_2: Array<number | BigNumber>, calldataBuy_3: string, calldataSell_4: string, replacementPatternBuy_5: string, replacementPatternSell_6: string, staticExtradataBuy_7: string, staticExtradataSell_8: string, vs_9: Array<number | BigNumber>, rssMetadata_10: string[]): string;
     };
     validateOrderParameters_: {
@@ -112,6 +119,7 @@ export declare class WyvernExchangeContract extends BaseContract {
     };
     transferOwnership: {
         sendTransactionAsync(newOwner_0: string, txData?: Partial<TxData>): Promise<TransactionResponse>;
+        estimateGasAsync(newOwner_0: string, txData?: Partial<TxData>): Promise<BigNumber>;
         getABIEncodedTransactionData(newOwner_0: string): string;
     };
     constructor(ethersContractInstance: ethers.Contract, defaults: Partial<TxData>);

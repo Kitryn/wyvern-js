@@ -24,6 +24,7 @@ export declare class WyvernDAOContract extends BaseContract {
     };
     executeProposal: {
         sendTransactionAsync(proposalNumber_0: BigNumber, transactionBytecode_1: string, txData?: Partial<TxData>): Promise<TransactionResponse>;
+        estimateGasAsync(proposalNumber_0: BigNumber, transactionBytecode_1: string, txData?: Partial<TxData>): Promise<BigNumber>;
         getABIEncodedTransactionData(proposalNumber_0: BigNumber, transactionBytecode_1: string): string;
     };
     sharesTokenAddress: {
@@ -43,10 +44,12 @@ export declare class WyvernDAOContract extends BaseContract {
     };
     setDelegateAndLockTokens: {
         sendTransactionAsync(tokensToLock_0: BigNumber, delegate_1: string, txData?: Partial<TxData>): Promise<TransactionResponse>;
+        estimateGasAsync(tokensToLock_0: BigNumber, delegate_1: string, txData?: Partial<TxData>): Promise<BigNumber>;
         getABIEncodedTransactionData(tokensToLock_0: BigNumber, delegate_1: string): string;
     };
     clearDelegateAndUnlockTokens: {
         sendTransactionAsync(txData?: Partial<TxData>): Promise<TransactionResponse>;
+        estimateGasAsync(txData?: Partial<TxData>): Promise<BigNumber>;
         getABIEncodedTransactionData(): string;
     };
     debatingPeriodInMinutes: {
@@ -54,6 +57,7 @@ export declare class WyvernDAOContract extends BaseContract {
     };
     changeVotingRules: {
         sendTransactionAsync(minimumSharesToPassAVote_0: BigNumber, minutesForDebate_1: BigNumber, sharesToBeBoardMember_2: BigNumber, txData?: Partial<TxData>): Promise<TransactionResponse>;
+        estimateGasAsync(minimumSharesToPassAVote_0: BigNumber, minutesForDebate_1: BigNumber, sharesToBeBoardMember_2: BigNumber, txData?: Partial<TxData>): Promise<BigNumber>;
         getABIEncodedTransactionData(minimumSharesToPassAVote_0: BigNumber, minutesForDebate_1: BigNumber, sharesToBeBoardMember_2: BigNumber): string;
     };
     minimumQuorum: {
@@ -61,6 +65,7 @@ export declare class WyvernDAOContract extends BaseContract {
     };
     receiveApproval: {
         sendTransactionAsync(from_0: string, value_1: BigNumber, token_2: string, extraData_3: string, txData?: Partial<TxData>): Promise<TransactionResponse>;
+        estimateGasAsync(from_0: string, value_1: BigNumber, token_2: string, extraData_3: string, txData?: Partial<TxData>): Promise<BigNumber>;
         getABIEncodedTransactionData(from_0: string, value_1: BigNumber, token_2: string, extraData_3: string): string;
     };
     tokenLocker: {
@@ -74,10 +79,12 @@ export declare class WyvernDAOContract extends BaseContract {
     };
     vote: {
         sendTransactionAsync(proposalNumber_0: BigNumber, supportsProposal_1: boolean, txData?: Partial<TxData>): Promise<TransactionResponse>;
+        estimateGasAsync(proposalNumber_0: BigNumber, supportsProposal_1: boolean, txData?: Partial<TxData>): Promise<BigNumber>;
         getABIEncodedTransactionData(proposalNumber_0: BigNumber, supportsProposal_1: boolean): string;
     };
     newProposal: {
         sendTransactionAsync(beneficiary_0: string, weiAmount_1: BigNumber, jobMetadataHash_2: string, transactionBytecode_3: string, txData?: Partial<TxData>): Promise<TransactionResponse>;
+        estimateGasAsync(beneficiary_0: string, weiAmount_1: BigNumber, jobMetadataHash_2: string, transactionBytecode_3: string, txData?: Partial<TxData>): Promise<BigNumber>;
         getABIEncodedTransactionData(beneficiary_0: string, weiAmount_1: BigNumber, jobMetadataHash_2: string, transactionBytecode_3: string): string;
     };
     DEBATE_PERIOD_MINUTES: {

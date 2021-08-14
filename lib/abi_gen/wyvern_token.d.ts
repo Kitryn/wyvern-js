@@ -15,6 +15,7 @@ export declare class WyvernTokenContract extends BaseContract {
     };
     approve: {
         sendTransactionAsync(_spender_0: string, _value_1: BigNumber, txData?: Partial<TxData>): Promise<TransactionResponse>;
+        estimateGasAsync(_spender_0: string, _value_1: BigNumber, txData?: Partial<TxData>): Promise<BigNumber>;
         getABIEncodedTransactionData(_spender_0: string, _value_1: BigNumber): string;
     };
     totalSupply: {
@@ -25,6 +26,7 @@ export declare class WyvernTokenContract extends BaseContract {
     };
     transferFrom: {
         sendTransactionAsync(_from_0: string, _to_1: string, _value_2: BigNumber, txData?: Partial<TxData>): Promise<TransactionResponse>;
+        estimateGasAsync(_from_0: string, _to_1: string, _value_2: BigNumber, txData?: Partial<TxData>): Promise<BigNumber>;
         getABIEncodedTransactionData(_from_0: string, _to_1: string, _value_2: BigNumber): string;
     };
     decimals: {
@@ -32,6 +34,7 @@ export declare class WyvernTokenContract extends BaseContract {
     };
     burn: {
         sendTransactionAsync(_value_0: BigNumber, txData?: Partial<TxData>): Promise<TransactionResponse>;
+        estimateGasAsync(_value_0: BigNumber, txData?: Partial<TxData>): Promise<BigNumber>;
         getABIEncodedTransactionData(_value_0: BigNumber): string;
     };
     pubKeyToEthereumAddress: {
@@ -42,6 +45,7 @@ export declare class WyvernTokenContract extends BaseContract {
     };
     decreaseApproval: {
         sendTransactionAsync(_spender_0: string, _subtractedValue_1: BigNumber, txData?: Partial<TxData>): Promise<TransactionResponse>;
+        estimateGasAsync(_spender_0: string, _subtractedValue_1: BigNumber, txData?: Partial<TxData>): Promise<BigNumber>;
         getABIEncodedTransactionData(_spender_0: string, _subtractedValue_1: BigNumber): string;
     };
     balanceOf: {
@@ -49,6 +53,7 @@ export declare class WyvernTokenContract extends BaseContract {
     };
     redeemUTXO: {
         sendTransactionAsync(txid_0: string, outputIndex_1: number | BigNumber, satoshis_2: BigNumber, proof_3: string[], pubKey_4: string, isCompressed_5: boolean, v_6: number | BigNumber, r_7: string, s_8: string, txData?: Partial<TxData>): Promise<TransactionResponse>;
+        estimateGasAsync(txid_0: string, outputIndex_1: number | BigNumber, satoshis_2: BigNumber, proof_3: string[], pubKey_4: string, isCompressed_5: boolean, v_6: number | BigNumber, r_7: string, s_8: string, txData?: Partial<TxData>): Promise<BigNumber>;
         getABIEncodedTransactionData(txid_0: string, outputIndex_1: number | BigNumber, satoshis_2: BigNumber, proof_3: string[], pubKey_4: string, isCompressed_5: boolean, v_6: number | BigNumber, r_7: string, s_8: string): string;
     };
     canRedeemUTXOHash: {
@@ -56,6 +61,7 @@ export declare class WyvernTokenContract extends BaseContract {
     };
     releaseTokens: {
         sendTransactionAsync(destination_0: string, txData?: Partial<TxData>): Promise<TransactionResponse>;
+        estimateGasAsync(destination_0: string, txData?: Partial<TxData>): Promise<BigNumber>;
         getABIEncodedTransactionData(destination_0: string): string;
     };
     symbol: {
@@ -63,6 +69,7 @@ export declare class WyvernTokenContract extends BaseContract {
     };
     transfer: {
         sendTransactionAsync(_to_0: string, _value_1: BigNumber, txData?: Partial<TxData>): Promise<TransactionResponse>;
+        estimateGasAsync(_to_0: string, _value_1: BigNumber, txData?: Partial<TxData>): Promise<BigNumber>;
         getABIEncodedTransactionData(_to_0: string, _value_1: BigNumber): string;
     };
     validateSignature: {
@@ -79,6 +86,7 @@ export declare class WyvernTokenContract extends BaseContract {
     };
     increaseApproval: {
         sendTransactionAsync(_spender_0: string, _addedValue_1: BigNumber, txData?: Partial<TxData>): Promise<TransactionResponse>;
+        estimateGasAsync(_spender_0: string, _addedValue_1: BigNumber, txData?: Partial<TxData>): Promise<BigNumber>;
         getABIEncodedTransactionData(_spender_0: string, _addedValue_1: BigNumber): string;
     };
     allowance: {
