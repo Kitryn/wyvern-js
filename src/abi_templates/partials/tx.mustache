@@ -10,10 +10,14 @@ public {{this.name}} = {
     ): Promise<TransactionResponse> {
         const self = this as {{contractName}}Contract;
         const txDataWithDefaults = await self.applyDefaultsToTxDataAsync(txData);
-
+        const ethersTxData = utils.convertTxDataToEthers(txDataWithDefaults);
+        const ethersInputs = self.convertEthersInputs(
+            {{> params inputs=inputs}}
+        )
+        
         const txResponse: TransactionResponse = await self.ethersContractInstance.{{this.name}}(
-            {{> params inputs=inputs}} 
-            txDataWithDefaults
+            ...ethersInputs,
+            ethersTxData
         )
         
         return txResponse;
@@ -26,9 +30,14 @@ public {{this.name}} = {
         const txDataWithDefaults = await self.applyDefaultsToTxDataAsync(
             txData,
         );
+        const ethersTxData = utils.convertTxDataToEthers(txDataWithDefaults);
+        const ethersInputs = self.convertEthersInputs(
+            {{> params inputs=inputs}}
+        )
+        
         const gas: ethersBN = await self.ethersContractInstance.estimateGas.{{this.name}}(
-            {{> params inputs=inputs}} 
-            txDataWithDefaults
+            ...ethersInputs,
+            ethersTxData
         );
         return new BigNumber(gas.toString());
     },
@@ -36,9 +45,11 @@ public {{this.name}} = {
     {{> typed_params inputs=inputs}}
     ): string {
         const self = this as {{contractName}}Contract;
-
-        const abiEncodedTransactionData = self.ethersContractInstance.interface.encodeFunctionData("{{this.name}}", [
+        const ethersInputs = self.convertEthersInputs(
             {{> params inputs=inputs}}
+        )
+        const abiEncodedTransactionData = self.ethersContractInstance.interface.encodeFunctionData("{{this.name}}", [
+            ...ethersInputs
         ])
         return abiEncodedTransactionData;
     },

@@ -4,13 +4,19 @@ public {{this.name}} = {
         txData: Partial<TxData> = {},
     ): Promise<{{> return_type outputs=outputs }}> {
         const self = this as {{contractName}}Contract;
+        const ethersInputs = self.convertEthersInputs(
+            {{> params inputs=inputs}}
+        )
+        const ethersTxData = utils.convertTxDataToEthers(txData);
 
-        const result: {{> return_type outputs=outputs}} = 
+        const result: any[] = 
             await self.ethersContractInstance.functions.{{this.name}}(
-                {{> params inputs=inputs}} 
-                txData
+                ...ethersInputs, 
+                ethersTxData
             );
 
-        return result;
+        const convertedResult: {{> return_type outputs=outputs}} = self.convertEthersOutputs(result);
+
+        return convertedResult;
     },
 };
