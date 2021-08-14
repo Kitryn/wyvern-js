@@ -18,6 +18,20 @@ public {{this.name}} = {
         
         return txResponse;
     },
+    async estimateGasAsync(
+    {{> typed_params inputs=inputs}}
+        txData: Partial<TxData> = {},
+    ): Promise<BigNumber> {
+        const self = this as {{contractName}}Contract;
+        const txDataWithDefaults = await self.applyDefaultsToTxDataAsync(
+            txData,
+        );
+        const gas: ethersBN = await self.ethersContractInstance.estimateGas.{{this.name}}(
+            {{> params inputs=inputs}} 
+            txDataWithDefaults
+        );
+        return new BigNumber(gas.toString());
+    },
     getABIEncodedTransactionData(
     {{> typed_params inputs=inputs}}
     ): string {
