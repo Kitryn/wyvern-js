@@ -46,6 +46,12 @@ describe("abi_gen", () => {
 
   it("Should 'Call' successfully (with multiple outputs)", async () => {
     const result = await wyvernDao.proposals.callAsync(new BigNumber(0));
-    console.log(result);
+    expect(result[0]).to.eq("0x17F68886d00845867C154C912b4cCc506EC92Fc7");
+    expect(BigNumber.isBigNumber(result[1])).to.be.true;
+    expect(typeof result[1].isNaN).to.eq("function"); // combination of above two tests differentiates ethersBN from BigNumberJS
+    expect(result[2]).to.eq(
+      "0x516d616b6762483877744771504a74346438547573633166533675427865584270654a6b6b31796a437171345238"
+    );
+    expect(result[5]).to.be.true;
   });
 });
